@@ -26,6 +26,8 @@ body{margin:0;color:var(--ink);font:700 17px/1.45 var(--body);background:var(--d
 .cloud::before{width:100px;height:100px;left:30px;top:-50px}.cloud::after{width:80px;height:80px;left:110px;top:-35px}
 @keyframes cloud{from{transform:translateX(-300px)}to{transform:translateX(calc(100vw + 300px))}}
 .app{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:14px 40px;display:flex;flex-direction:column;gap:18px}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,[role=button],.slot,.zone{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 button:focus-visible,[tabindex]:focus-visible{outline:4px solid var(--gold);outline-offset:3px}
 /* HUD */
@@ -42,7 +44,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid var(--gold);outl
 @media (max-width:560px){.logo small{display:none}.logo b{font-size:15px}.stat{font-size:16px}}
 /* chunky buttons */
 .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 19px var(--display);padding:14px 26px;border-radius:16px;border:3px solid var(--outline);background:var(--gold);color:var(--ink);box-shadow:0 6px 0 var(--outline);transition:transform .08s,box-shadow .08s}
-.btn:hover{filter:brightness(1.04)}.btn:active{transform:translateY(5px);box-shadow:0 1px 0 var(--outline)}
+@media (hover:hover){.btn:hover{filter:brightness(1.04)}}.btn:active{transform:translateY(5px);box-shadow:0 1px 0 var(--outline)}
 .btn.sea{background:var(--sea2);color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.25)}
 .btn.soft{background:var(--panel)}
 .btn[disabled]{filter:grayscale(.7);opacity:.6;cursor:not-allowed;transform:none;box-shadow:0 6px 0 var(--outline)}
@@ -58,7 +60,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid var(--gold);outl
 .island{position:relative;display:grid;justify-items:center;gap:6px;text-align:center;padding:0;border-radius:24px}
 .island :is(img,canvas){width:100%;max-width:300px;filter:drop-shadow(0 18px 12px rgba(0,0,0,.35));transition:transform .2s;animation:bob 5s ease-in-out infinite}
 .island:nth-child(2) :is(img,canvas){animation-delay:-1.6s}.island:nth-child(3) :is(img,canvas){animation-delay:-3.2s}
-.island:hover :is(img,canvas){transform:translateY(-8px) scale(1.03)}
+@media (hover:hover){.island:hover :is(img,canvas){transform:translateY(-8px) scale(1.03)}}
 @keyframes bob{50%{translate:0 -10px}}
 .flag{display:grid;gap:2px;justify-items:center;background:var(--panel);border:3px solid var(--outline);border-radius:16px;padding:8px 16px 10px;box-shadow:0 5px 0 var(--outline);margin-top:-18px;position:relative}
 .flag .code{font:700 13px var(--display);letter-spacing:2px;color:#fff;background:var(--coral);border:3px solid var(--outline);border-radius:999px;padding:1px 10px;margin-top:-22px}
@@ -91,7 +93,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid var(--gold);outl
 .hint{margin:0;color:var(--ink2);font-size:15px;font-weight:700}
 .opts{display:grid;gap:10px}
 .opt{display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:3px solid var(--outline);border-radius:16px;padding:11px 14px;min-height:56px;font-weight:800;font-size:17px;box-shadow:0 4px 0 var(--outline);transition:transform .08s,box-shadow .08s,background .15s}
-.opt:hover:not([disabled]){background:#FFFBF2;transform:translateY(-2px);box-shadow:0 6px 0 var(--outline)}
+@media (hover:hover){.opt:hover:not([disabled]){background:#FFFBF2;transform:translateY(-2px);box-shadow:0 6px 0 var(--outline)}}
 .opt:active:not([disabled]){transform:translateY(3px);box-shadow:0 1px 0 var(--outline)}
 .opt .k{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;font:700 17px var(--display);color:#fff;border:3px solid var(--outline)}
 .k0{background:var(--coral)}.k1{background:var(--sea2)}.k2{background:var(--leaf)}.k3{background:var(--berry)}.k4{background:var(--gold2)}.k5{background:#E0569A}
@@ -163,6 +165,9 @@ canvas.s3d{display:block;height:auto;aspect-ratio:1400/1064}
  .app:has(>.world) .note{margin:0}
 }
 @media (min-width:761px) and (max-height:820px){.app:has(>.world) .modes{display:none}}
+/* island-complete screen: scale the scene/stars/score so the buttons stay on screen */
+.result>:is(img,canvas){width:min(340px,80%,max(110px,calc((100dvh - 430px) * 1.316)))!important}
+@media (max-height:820px){.result .bigstars svg{width:50px;height:50px}.result .coins{font-size:clamp(36px,6vh,56px)}.result h2{font-size:clamp(26px,4.5vh,40px)}.app:has(>.result) .result{gap:10px;padding-block:14px}.app:has(>.result){padding-block:8px 14px}}
 /* short, wide windows: Borneo map + the three islands in one row */
 @media (min-width:761px) and (max-height:700px){
  .app:has(>.world) .world{grid-template-columns:1.25fr 1fr 1fr 1fr;grid-template-rows:minmax(0,1fr);align-items:center}
@@ -190,6 +195,11 @@ canvas.s3d{display:block;height:auto;aspect-ratio:1400/1064}
  .app:has(>.quest) .scene canvas{width:min(100%,calc(18dvh * 1.316))}
  .app:has(>.quest) .scene .cap{font-size:12px;padding:1px 10px}
  .app:has(>.quest) .panel{align-self:stretch;padding:14px 14px 16px}}
+/* tablet portrait (tall): give the 3D scene more room */
+@media (max-width:820px) and (min-height:880px){
+ .app:has(>.quest) .scene img{max-height:30dvh}
+ .app:has(>.quest) .scene canvas{width:min(100%,calc(30dvh * 1.316))}
+ .app:has(>.quest) .scene .cap{font-size:14px;padding:3px 12px}}
 @media (max-height:600px){
  .app:has(>.quest) .quest{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr)}
  .app:has(>.quest) .scene{display:none}
@@ -279,7 +289,7 @@ const maxOf=st=>st.qs.length*100;
 const starsFor=(p,m)=>p>=m*.9?3:p>=m*.65?2:p>=m*.35?1:0;
 const TOTAL=STAGES.reduce((a,s)=>a+maxOf(s),0);
 /* sound (starts only after a tap) */
-let AC=null;function tone(fs,d=.12,type='triangle',vol=.14){if(!sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();let t=AC.currentTime;fs.forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,t+i*d);g.gain.linearRampToValueAtTime(vol,t+i*d+.01);g.gain.exponentialRampToValueAtTime(.001,t+i*d+d*1.8);o.connect(g).connect(AC.destination);o.start(t+i*d);o.stop(t+i*d+d*2)})}catch(e){}}
+let AC=null;function tone(fs,d=.12,type='triangle',vol=.14){if(!sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();let t=AC.currentTime;fs.forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,t+i*d);g.gain.linearRampToValueAtTime(vol,t+i*d+.01);g.gain.exponentialRampToValueAtTime(.001,t+i*d+d*1.8);o.connect(g).connect(AC.destination);o.start(t+i*d);o.stop(t+i*d+d*2)})}catch(e){}}
 const sfx={ok:()=>tone([660,880,1320]),bad:()=>tone([300,220],.16,'sawtooth',.08),tap:()=>tone([520],.05,'sine',.06),win:()=>tone([523,659,784,1047,1319],.11)};
 /* confetti */
 const cv=document.getElementById('fx'),cx=cv.getContext('2d');let parts=[],raf=null;
